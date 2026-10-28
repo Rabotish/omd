@@ -6,7 +6,7 @@ from collections import defaultdict
 def read_csv(file_name: str) -> list[list[str]]:
     if not re.fullmatch(r'[a-zA-Zа-яА-ЯёЁ0-9_-]+', file_name):
         raise ValueError('Имя файла содержит недопустимые символы')
-    input_path = './data/' + file_name + '.csv'
+    input_path = './homework_2/data/' + file_name + '.csv'
     try:
         with open(input_path, 'r', encoding='utf-8', newline='') as f:
             reader = csv.reader(f, delimiter=';')
@@ -26,7 +26,7 @@ def make_report(number: int = 1, file_name: str = 'Corp_Summary') -> None:
         report_summary(data)
     elif number == 3:
         file_name = (
-            input('Введите имя выходного файла (будет записан в ./data): ')
+            input('Введите имя выходного файла (./homework_2/data/): ')
             or 'departments_summary'
         )
         report_summary_csv(data, file_name)
@@ -79,7 +79,7 @@ def report_summary_csv(data: list, file_name: str) -> None:
         'Департамент', 'Количество сотрудников', 'Максимальная зарплата',
         'Минимальная зарплата', 'Средняя зарплата',
     ]
-    output_path = './data/' + file_name + '.csv'
+    output_path = './homework_2/data/' + file_name + '.csv'
     try:
         with open(output_path, 'x', encoding='utf-8', newline='') as f:
             writer = csv.DictWriter(f, fieldnames=fieldnames)
