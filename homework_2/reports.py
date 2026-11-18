@@ -45,17 +45,19 @@ def report_hierarchy(data: list) -> dict[str, set]:
 
 def report_summary(data: list, show: bool = True) -> dict[str, list]:
     departments: dict[str, list[int | float]] = defaultdict(list)
+
     for item in data[1:]:
-        if item[1] in departments:
-            continue
-        salaries = [int(i[5]) for i in data[1:] if i[1] == item[1]]
-        departments[item[1]].append(len(salaries))
+        departments[item[1]].append(int(item[5]))
+    for department, salaries in departments.items():
         max_salary = max(salaries)
-        departments[item[1]].append(max_salary)
         min_salary = min(salaries)
-        departments[item[1]].append(min_salary)
         avg_salary = round(sum(salaries) / len(salaries), 2)
-        departments[item[1]].append(avg_salary)
+        departments[department] = [
+            len(salaries),
+            max_salary,
+            min_salary,
+            avg_salary
+        ]
     if show:
         print('Задание 2')
         for key, value in departments.items():
@@ -100,5 +102,5 @@ def report_summary_csv(data: list, file_name: str) -> None:
 if __name__ == '__main__':
     report_number = int(input(
             'Введите номер отчёта (1 - иерархия, 2 - сводка по департаментам, '
-            '3 - сводка по департаментамв CSV): '))
+            '3 - сводка по департаментам в CSV): '))
     make_report(report_number)
